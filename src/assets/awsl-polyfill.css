@@ -1,0 +1,170 @@
+@font-face {
+    font-style: normal;
+    font-weight: 400;
+    font-family: "JetBrainsMono";
+    src: url("https://jcdn-1251131545.file.myqcloud.com/jetbrains-mono/2.242/JetBrainsMono-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-style: italic;
+    font-weight: 400;
+    font-family: "JetBrainsMono";
+    src: url("https://jcdn-1251131545.file.myqcloud.com/jetbrains-mono/2.242/JetBrainsMono-Italic.woff2") format("woff2");
+}
+
+@font-face {
+    font-style: normal;
+    font-weight: 400;
+    font-family: "Inter";
+    src: url("https://jcdn-1251131545.file.myqcloud.com/inter/3.19/Inter-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-style: italic;
+    font-weight: 400;
+    font-family: "Inter";
+    src: url("https://jcdn-1251131545.file.myqcloud.com/inter/3.19/Inter-Italic.woff2") format("woff2");
+}
+
+@font-face {
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    font-family: "JetBrainsMono";
+    src: url("https://jcdn-1251131545.file.myqcloud.com/jetbrains-mono/2.242/JetBrainsMono-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+    font-style: italic;
+    font-weight: 600;
+    font-display: swap;
+    font-family: "JetBrainsMono";
+    src: url("https://jcdn-1251131545.file.myqcloud.com/jetbrains-mono/2.242/JetBrainsMono-SemiBoldItalic.woff2") format("woff2");
+}
+
+/* Polyfill */
+body {
+    font-family: "Inter" !important;
+    font-size: 16px !important;
+}
+
+code, pre {
+    font-family: JetBrainsMono !important;
+}
+
+header.aw-header a.active {
+    border-color: #3f3f3f;
+}
+
+footer {
+    margin-top: 300px;
+}
+
+/* Polyfill - reset font size */
+article h1.headline {
+    /* headline should be bigger to catch eyes */
+    font-size: 62px; /* h1 * 1.618 * 80% */
+    font-weight: 400;
+}
+
+article h1, .aw-doc article h1 {
+    font-size: 48px; /* h2 * 1.618 * 85% */
+    font-weight: 400;
+}
+
+article h2, .aw-doc article h2 {
+    font-size: 35px;  /* h3 * 1.618 * 90% */
+    font-weight: 400;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+article h3, article .toc h2, .aw-doc article h3, .aw-doc article .toc h2 {
+    font-size: 24px; /* h4 * 1.618 * 95% */
+    font-weight: 400;
+    border-bottom: none;
+}
+
+article h4, .aw-doc article h4 {
+    /* h4 is just like normal text, but bolded */
+    font-size: 16px;
+    font-weight: 600;
+}
+
+article b, .aw-doc article b,
+ article strong, .aw-doc article strong {
+    /* 600 is better than 700 for Inter */
+    font-weight: 600 !important;
+}
+
+article h1, .aw-doc article h1,
+article h2, .aw-doc article h2,
+article h3, .aw-doc article h3
+article h4, .aw-doc article h4
+article h5, .aw-doc article h5
+article h6, .aw-doc article h6 {
+    margin-top: 1em;
+    margin-bottom: 0;
+}
+
+article h5, .aw-doc article h5
+article h6, .aw-doc article h6 {
+    /* You don't need h5 and h6 - display them as if they are normal text */
+    font-size: 16px !important;
+    font-weight: 400 !important;
+}
+
+.toc h2, .toc ul, .toc ol {
+    margin: 0;
+}
+
+/* Polyfill - width limitation */
+@media (max-width: 1279px) {
+    footer.aw-footer .aw-footer-copyright.aw-footer-copyright-s li {
+        display: block;
+        padding: 2px 8px;
+    }
+}
+
+@media (min-width: 1280px) {
+    footer.aw-footer .aw-footer-copyright.aw-footer-copyright-s li {
+        padding-left: 0;
+    }
+}
+
+@media (min-width: 1280px) {
+    header, .aw-vh-container, .aw-footer-copyright {
+        min-width: 1000px;
+        max-width: 1712px; /* Will someone has so large screen? */
+        width: 31.8%; /* 1 - 0.618 */
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
+
+/* Fix scoll bar */
+.aw-scoll-x, .aw-table {
+    width: 100%;
+}
+
+.aw-table th, .aw-table td {
+    text-align: left;
+}
+
+html, body, pre, .aw-scoll-x {
+    scrollbar-width: thin;
+    scrollbar-width: 5px;
+    scrollbar-color: #c0c0c0 #f0f0f0;
+}
+
+::-webkit-scrollbar, body::-webkit-scrollbar, pre::-webkit-scrollbar, .table-container::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track, body::-webkit-scrollbar-track, pre::-webkit-scrollbar-track, .table-container::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb, pre::-webkit-scrollbar-thumb, .table-container::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+}

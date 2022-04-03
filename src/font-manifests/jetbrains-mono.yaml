@@ -1,0 +1,25 @@
+versions:
+  - code: "1.0.3"
+    formats: [eot, woff2]
+    styles:
+      - {italic: false, weight: 400, name: Regular, default: true}
+      - {italic: true,  weight: 400, name: Italic,  default: true}
+  - code: "2.242"
+    formats: [eot, woff2]
+    styles:
+      - {italic: false, weight: 100, name: Thin}
+      - {italic: true,  weight: 100, name: ThinItalic}
+      - {italic: false, weight: 200, name: ExtraLight}
+      - {italic: true,  weight: 200, name: ExtraLightItalic}
+      - {italic: false, weight: 300, name: Light}
+      - {italic: true,  weight: 300, name: LightItalic}
+      - {italic: false, weight: 400, name: Regular, default: true}
+      - {italic: true,  weight: 400, name: Italic,  default: true}
+      - {italic: false, weight: 500, name: Medium}
+      - {italic: true,  weight: 500, name: MediumItalic}
+      - {italic: false, weight: 600, name: SemiBold}
+      - {italic: true,  weight: 600, name: SemiBoldItalic}
+      - {italic: false, weight: 700, name: Bold}
+      - {italic: true,  weight: 700, name: BoldItalic}
+      - {italic: false, weight: 800, name: ExtraBold}
+      - {italic: true,  weight: 800, name: ExtraBoldItalic}

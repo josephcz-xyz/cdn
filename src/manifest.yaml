@@ -1,0 +1,77 @@
+# manifest.yaml
+# package v1: /{name}{version-major}[.min].js
+# package v2: /{name}/{version}/{filename}[.min].(js|css)
+# webfont:    /{name}/{version}/{name}-{style}.(format)
+
+packages:
+  - name: jquery
+    display_name: jQuery
+    manifest_version: 1
+    meta:
+      homepage: https://jquery.com/
+      github: jquery/jquery
+      license: MIT
+    version:
+     - code: 1.11.3
+     - code: 2.1.4
+     - code: 3.6.0
+
+  - name: vue
+    display_name: Vue.js
+    manifest_version: 1
+    meta:
+      homepage: https://vuejs.org/
+      github: vuejs/vue
+      license: MIT
+    version:
+     - code: 1.0.28
+     - code: 2.6.10
+
+  - name: axios
+    display_name: Axios
+    manifest_version: 2
+    type: library
+    meta:
+      homepage: https://axios-http.com/
+      github: axios/axios
+      license: MIT
+    version:
+      - code: 0.24.0
+        files:
+        - axios.js
+
+  - name: awsl.css
+    display_name: awsl.css
+    manifest_version: 2
+    type: library
+    meta:
+      homepage: https://awsl.josephcz.xyz/
+      github: baobao1270/awsl.css
+      license: MIT
+    version:
+      - code: 0.1.0
+        files:
+        - awsl.css
+      - code: 2.0.0-rc1
+        files:
+        - awsl.css
+  
+  - name: jetbrains-mono
+    display_name: "JetBrains Mono"
+    font_name: JetBrainsMono
+    manifest_version: 2
+    type: font
+    meta:
+      homepage: https://jetbrains.com/mono/
+      github: JetBrains/JetBrainsMono
+      license: OFL-1.1
+
+  - name: inter
+    display_name: Inter
+    font_name: Inter
+    manifest_version: 2
+    type: font
+    meta:
+      homepage: https://rsms.me/inter/
+      github: rsms/inter
+      license: OFL-1.1

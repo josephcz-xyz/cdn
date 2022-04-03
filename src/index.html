@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="https://jcdn-1251131545.file.myqcloud.com/awsl.css/0.1.0/awsl.min.css">
+    <link rel="stylesheet" href="/assets/awsl-polyfill.css">
+    <link rel="stylesheet" href="/assets/index.css">
+    <link rel="preload" href="/manifest.yaml" as="fetch">
+    <script src="https://jcdn-1251131545.file.myqcloud.com/vue2.js"></script>
+    <script src="https://jcdn-1251131545.file.myqcloud.com/axios/0.24.0/axios.min.js"></script>
+    <script src="/assets/lib/js-yaml.min.js"></script>
+    <script src="/assets/index.js"></script>
+    <title>CDN - Joseph's Service</title>
+</head>
+
+<body>
+    <header class="aw-header">
+        <h1><a href="/">CDN</a></h1>
+        <nav>
+            <label for="aw-header-nav-expend-doc-demo" class="aw-header-nav-expend"></label>
+            <input id="aw-header-nav-expend-doc-demo" type="checkbox" / class="aw-header-nav-expend">
+            <ul>
+                <li><a href="https://josephcz.xyz">Home</a></li>
+                <li><a href="https://josephcz.xyz/about.html">About</a></li>
+                <li><a href="/" class="active">CDN</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="aw-vh-container aw-vh-container-align-header aw-doc">
+        <a href="#top" class="aw-ghost-light btn-go-top">↑</a>
+        <article id="app">
+            <h1>Joseph's CDN Service</h1>
+            <div class="introduction">
+                <div class="toc">
+                    <h2>Table of Contents</h2>
+                    <ul>
+                        <li v-for="package in packages">
+                            <a :href="'#' + package.name">{{ package.display_name }}</a>
+                        </li>
+                        </ol>
+                </div>
+                <div class="state-selector">
+                    <div class="btn-group">
+                        <button class="aw-btn aw-hov-dark btn-group-item" :class="{active:  state.url}" @click="state.url =  true">URL</button>
+                        <button class="aw-btn aw-hov-dark btn-group-item" :class="{active: !state.url}" @click="state.url = false">Code</button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="aw-btn aw-hov-dark btn-group-item" :class="{active: state.env ===  'all'}" @click="state.env =  'all'">All</button>
+                        <button class="aw-btn aw-hov-dark btn-group-item" :class="{active: state.env ===  'dev'}" @click="state.env =  'dev'">Development</button>
+                        <button class="aw-btn aw-hov-dark btn-group-item" :class="{active: state.env === 'prod'}" @click="state.env = 'prod'">Production</button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="packages">
+                <section v-for="package in packages">
+                    <h2 :id="package.name">{{ package.display_name }}</h2>
+                    <package-metadata :meta="package.meta"></package-metadata>
+                    <library-view :package="package" :state="state" v-if="isLibrary (package)"></library-view>
+                    <font-view    :package="package" :state="state" v-if="isFont    (package)"></font-view>
+                </section>
+            </div>
+        </article>
+    </div>
+    <footer class="aw-footer">
+        <div class="aw-footer-copyright aw-footer-copyright-s">
+            <ul>
+                <li>&copy; 2022 Joseph Chris</li>
+                <li><a target="_blank" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></li>
+                <li><a target="_blank" href="https://github.com/josephcz-xyz/cdn">GitHub</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+<template id="vue-component-package-metadata">
+    <p class="package-metadata">
+        <span v-if="meta.homepage">
+            <a target="_blank" :href="meta.homepage">Homepage</a>
+        </span>
+        <span v-if="meta.github">
+            <a target="_blank" :href="`https://github.com/${meta.github}`">GitHub</a>
+        </span>
+        <span v-if="meta.license">
+            <a target="_blank" :href="`https://spdx.org/licenses/${meta.license}.html`">{{ meta.license }}</a>
+        </span>
+    </p>
+</template>
+<template id="vue-component-library-view">
+    <div class="package package-library-view">
+        <h3 style="font-size: 16px;">Version:
+            <select v-model="selected_version">
+                <option v-for="version in package.version" :value="version.code">
+                    {{ version.code }}
+                </option>
+            </select>
+        </h3>
+        <div v-if="state.env == 'prod' || state.env == 'all'">
+            <h4>Production</h4>
+            <pre>{{ preformattedContent("prod") }}</pre>
+        </div>
+        <div v-if="state.env == 'dev' || state.env == 'all'">
+            <h4>Development</h4>
+            <pre>{{ preformattedContent("dev") }}</pre>
+        </div>
+    </div>
+</template>
+<template id="vue-component-font-view">
+    <div class="package package-font-view">
+        <h3 style="font-size: 16px;" class="font-selector">Version:
+            <select v-model="selected_version">
+                <option v-for="version in versions" :value="version.code">
+                    {{ version.code }}
+                </option>
+            </select>
+        </h3>
+        <div v-for="version in versions">
+            <div v-if="version.code === selected_version">
+                <font-select-view :package="package" :version="version" :state="state"></font-select-view>
+            </div>
+        </div> 
+    </div>
+</template>
+<template id="vue-component-font-select-view">
+    <div class="package-font-select-view">
+        <div class="aw-scoll-x">
+            <div style="min-width: 600px;">
+                <div class="font-selector aw-g">
+                    <div class="aw-g-w-1-8">Formats:</div>
+                    <div class="aw-g-w-7-8 aw-g">
+                        <div v-for="format in version.formats" class="aw-g-w-1-2">
+                            <input type="checkbox" :id="checkboxId(format)" :value="format" v-model="selected_formats" @change="sortItems()">
+                            <label for="checkboxId(format)">
+                                {{ format }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="font-selector aw-g" style="margin-bottom: 1em;">
+                    <div class="aw-g-w-1-8">Styles:</div>
+                    <div class="aw-g-w-7-8 aw-g">
+                        <div class="aw-g-w-1-4"><a @click="setStylesSelection('all')">All</a></div>
+                        <div class="aw-g-w-1-4"><a @click="setStylesSelection('default')">Default</a></div>
+                        <div class="aw-g-w-1-4"><a @click="setStylesSelection('none')">None</a></div>
+                        <div v-for="style in version.styles" class="aw-g-w-1-2">
+                            <input type="checkbox" :id="checkboxId(style)":value="style.name" v-model="selected_styles" @change="sortItems()">
+                            <label :for="checkboxId(style)">
+                                {{ style.name }} ({{ style.weight }})
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <pre>{{ this.state.url ? urlCode : cssCode }}</pre>
+    </div>
+</template>
+<script>(() => {appStart()})()</script>
+</html>
